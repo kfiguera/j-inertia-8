@@ -26,6 +26,7 @@ class NoteController extends Controller
      */
     public function create(Note $note)
     {
+        return Inertia::render('Notes/Create');
     }
 
     /**
