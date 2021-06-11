@@ -17,14 +17,14 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
-                            <form>
+                            <form @submit.prevent="submit">
                                 <label class="block font-medium text-sm text-gray-700" for="excerpt">Resumen</label>
                                 <textarea class="form-input w-full rounded-md shadow-sm"
                                           v-model="form.excerpt" name="excerpt" id="excerpt"></textarea>
 
                                 <label class="block font-medium text-sm text-gray-700" for="content">Contenido</label>
                                 <textarea class="form-input w-full rounded-md shadow-sm"
-                                          v-model="form.content" name="content" id="content" rows="5"></textarea>
+                                          v-model="form.content" name="content" id="content" rows="8"></textarea>
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
                                     Editar
                                 </button>
@@ -56,6 +56,11 @@
                     excerpt: this.note.excerpt,
                     content: this.note.content,
                 }
+            }
+        },
+        methods: {
+            submit() {
+                this.$inertia.put(this.route('notes.update', this.note.id), this.form)
             }
         }
     }
