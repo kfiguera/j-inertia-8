@@ -29,7 +29,7 @@
                                             Ver
                                         </inertia-link>
                                     </td>
-                                    <td class="px-4 py-2">
+                                    <td class="px-4 py-2 rounded">
                                         <inertia-link :href="route('notes.edit', note.id )">
                                             Editar
                                         </inertia-link>
