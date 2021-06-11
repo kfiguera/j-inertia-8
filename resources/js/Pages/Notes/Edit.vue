@@ -30,8 +30,11 @@
                                 </button>
                             </form>
                             <hr class="my-6">
-                            <inertia-link :href="route('notes.index')">Volver</inertia-link>
-
+                            <div class="flex justify-between items-center">
+                                <inertia-link :href="route('notes.index')">Volver</inertia-link>
+                                <a href="#" @click.prevent="destroy"
+                                   class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">Eliminar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,6 +64,12 @@
         methods: {
             submit() {
                 this.$inertia.put(this.route('notes.update', this.note.id), this.form)
+            },
+            destroy() {
+                if (confirm('¿Desea Eliminar?')) {
+                    this.$inertia.delete(this.route('notes.destroy', this.note.id), this.form)
+                }
+
             }
         }
     }

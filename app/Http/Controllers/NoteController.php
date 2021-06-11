@@ -32,41 +32,46 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'excerpt' => 'required',
+            'content' => 'required',
+        ]);
+        $note = Note::create($request->all());
+        return redirect()->route('notes.edit', $note->id)->with('status','Nota creada');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Note  $note
+     * @param \App\Models\Note $note
      * @return \Illuminate\Http\Response
      */
     public function show(Note $note)
     {
-        return Inertia::render('Notes/Show',compact('note'));
+        return Inertia::render('Notes/Show', compact('note'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Note  $note
+     * @param \App\Models\Note $note
      * @return \Illuminate\Http\Response
      */
     public function edit(Note $note)
     {
-        return Inertia::render('Notes/Edit',compact('note'));
+        return Inertia::render('Notes/Edit', compact('note'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Note  $note
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Note $note
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Note $note)
@@ -76,17 +81,18 @@ class NoteController extends Controller
             'content' => 'required',
         ]);
         $note->update($request->all());
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('status','Nota actualizada');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Note  $note
+     * @param \App\Models\Note $note
      * @return \Illuminate\Http\Response
      */
     public function destroy(Note $note)
     {
-        //
+        $note->delete();
+        return redirect()->route('notes.index')->with('status','Nota eliminada');
     }
 }
